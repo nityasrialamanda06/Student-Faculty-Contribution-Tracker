@@ -5,6 +5,11 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="navbar">
+    <span>Contribution Tracker - Admin</span>
+    <button onclick="logout()">Logout</button>
+  </div>
+
   <h2>Admin Dashboard</h2>
   <label>Filter by status:</label>
   <select id="filterStatus" onchange="loadAllSubmissions()">
