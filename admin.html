@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>Admin Dashboard</h2>
+  <select id="filterStatus" onchange="loadAllSubmissions()">
+    <option value="All">All</option>
+    <option value="Pending">Pending</option>
+    <option value="Approved">Approved</option>
+    <option value="Rejected">Rejected</option>
+  </select>
+  <table border="1" id="submissionsTable" style="width:100%; background:white;">
+    <thead>
+      <tr><th>Name</th><th>Role</th><th>Category</th><th>Title</th><th>Status</th><th>Action</th></tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
