@@ -3,9 +3,6 @@
 <head>
   <title>Admin Dashboard</title>
   <link rel="stylesheet" href="style.css">
-  <style>
-    body { max-width: 800px; }
-  </style>
 </head>
 <body>
   <div class="navbar">
@@ -14,6 +11,7 @@
   </div>
 
   <h2>Admin Dashboard</h2>
+  <label>Filter by status:</label>
   <select id="filterStatus" onchange="loadAllSubmissions()">
     <option value="All">All</option>
     <option value="Pending">Pending</option>
@@ -28,6 +26,11 @@
     <tbody id="tableBody"></tbody>
   </table>
 
+  <button onclick="exportPDF()">Export PDF</button>
+  <button onclick="exportExcel()">Export Excel</button>
+
   <script type="module" src="app.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </body>
 </html>
