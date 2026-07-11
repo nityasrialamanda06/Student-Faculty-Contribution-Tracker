@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>Admin Dashboard</h2>
+  <label>Filter by status:</label>
+  <select id="filterStatus" onchange="loadAllSubmissions()">
+    <option value="All">All</option>
+    <option value="Pending">Pending</option>
+    <option value="Approved">Approved</option>
+    <option value="Rejected">Rejected</option>
+  </select>
+
+  <table border="1" id="submissionsTable">
+    <thead>
+      <tr><th>Name</th><th>Role</th><th>Category</th><th>Title</th><th>Status</th><th>Action</th></tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+
+  <button onclick="exportPDF()">Export PDF</button>
+  <button onclick="exportExcel()">Export Excel</button>
+
+  <script type="module" src="app.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</body>
+</html>
