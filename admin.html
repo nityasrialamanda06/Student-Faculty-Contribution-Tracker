@@ -3,23 +3,33 @@
 <head>
   <title>Admin Dashboard</title>
   <link rel="stylesheet" href="style.css">
-  <style>
-    body { max-width: 900px; }
-  </style>
 </head>
 <body>
   <div class="navbar">
     <span>Contribution Tracker - Admin</span>
+    <button onclick="window.location.href='reports.html'">View Analytics & Reports</button>
     <button onclick="logout()">Logout</button>
   </div>
 
   <h2>Admin Dashboard</h2>
 
-  <div id="statsBar" style="display:flex; gap:15px; margin:15px 0;">
-    <div style="background:white; padding:10px 15px; border-radius:6px; flex:1; text-align:center; box-shadow:0 1px 3px rgba(0,0,0,0.08);"><b id="totalCount">0</b><br>Total</div>
-    <div style="background:#fff3cd; padding:10px 15px; border-radius:6px; flex:1; text-align:center;"><b id="pendingCount">0</b><br>Pending</div>
-    <div style="background:#d4edda; padding:10px 15px; border-radius:6px; flex:1; text-align:center;"><b id="approvedCount">0</b><br>Approved</div>
-    <div style="background:#f8d7da; padding:10px 15px; border-radius:6px; flex:1; text-align:center;"><b id="rejectedCount">0</b><br>Rejected</div>
+  <div style="display:flex; gap:15px; margin-bottom:20px;">
+    <div style="background:white; padding:15px; border-radius:8px; text-align:center; flex:1;">
+      <div id="totalCount" style="font-size:24px; font-weight:bold;">0</div>
+      <div>Total</div>
+    </div>
+    <div style="background:#fdf3d1; padding:15px; border-radius:8px; text-align:center; flex:1;">
+      <div id="pendingCount" style="font-size:24px; font-weight:bold;">0</div>
+      <div>Pending</div>
+    </div>
+    <div style="background:#d4f3e0; padding:15px; border-radius:8px; text-align:center; flex:1;">
+      <div id="approvedCount" style="font-size:24px; font-weight:bold;">0</div>
+      <div>Approved</div>
+    </div>
+    <div style="background:#f9d6d6; padding:15px; border-radius:8px; text-align:center; flex:1;">
+      <div id="rejectedCount" style="font-size:24px; font-weight:bold;">0</div>
+      <div>Rejected</div>
+    </div>
   </div>
 
   <label>Filter by status:</label>
@@ -46,30 +56,32 @@
   <label>Filter by role:</label>
   <select id="filterRole" onchange="loadAllSubmissions()">
     <option value="All">All Roles</option>
-    <option value="student">Students Only</option>
-    <option value="faculty">Faculty Only</option>
+    <option value="student">Student</option>
+    <option value="faculty">Faculty</option>
   </select>
 
   <label>Filter by department:</label>
   <select id="filterDept" onchange="loadAllSubmissions()">
     <option value="All">All Departments</option>
-    <option value="CSE">CSE</option>
-    <option value="CSE (Data Science)">CSE (Data Science)</option>
-    <option value="CSE (AI & ML)">CSE (AI & ML)</option>
-    <option value="ECE">ECE</option>
-    <option value="EEE">EEE</option>
+    <option value="Computer Science">Computer Science</option>
+    <option value="Electronics">Electronics</option>
     <option value="Mechanical">Mechanical</option>
-    <option value="Civil">Civil</option>
-    <option value="IT">IT</option>
-    <option value="Administration">Administration</option>
   </select>
 
   <label>Search by name:</label>
-  <input type="text" id="searchName" placeholder="Type a name..." onkeyup="loadAllSubmissions()">
+  <input type="text" id="searchName" oninput="loadAllSubmissions()" placeholder="Type a name...">
 
   <table border="1" id="submissionsTable">
     <thead>
-      <tr><th>Name</th><th>Role</th><th>Department</th><th>Category</th><th>Title</th><th>Status</th><th>Action</th></tr>
+      <tr>
+        <th>Name</th>
+        <th>Role</th>
+        <th>Department</th>
+        <th>Category</th>
+        <th>Title</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
     </thead>
     <tbody id="tableBody"></tbody>
   </table>

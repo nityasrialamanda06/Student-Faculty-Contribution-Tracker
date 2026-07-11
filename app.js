@@ -17,6 +17,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
+// ===== SIGNUP =====
 window.signup = async function() {
   const name = document.getElementById("name").value;
   const email = document.getElementById("signupEmail").value;
@@ -32,6 +33,7 @@ window.signup = async function() {
   } catch (err) { alert("Signup failed: " + err.message); }
 }
 
+// ===== LOGIN =====
 window.login = async function() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
@@ -53,8 +55,10 @@ window.login = async function() {
   } catch (err) { alert("Login failed: " + err.message); }
 }
 
+// ===== LOGOUT =====
 window.logout = function() { localStorage.clear(); window.location.href = "index.html"; }
 
+// ===== SUBMIT ACHIEVEMENT (Student/Faculty) =====
 window.submitAchievement = async function() {
   const title = document.getElementById("title").value;
   const category = document.getElementById("category").value;
@@ -79,6 +83,7 @@ window.submitAchievement = async function() {
   loadMySubmissions();
 }
 
+// ===== LOAD MY SUBMISSIONS (Student/Faculty) =====
 window.loadMySubmissions = async function() {
   const q = query(collection(db, "submissions"), where("uid", "==", localStorage.getItem("uid")));
   const snapshot = await getDocs(q);
@@ -91,6 +96,7 @@ window.loadMySubmissions = async function() {
   document.getElementById("mySubmissions").innerHTML = html || "No submissions yet.";
 }
 
+// ===== LOAD ALL SUBMISSIONS (Admin) =====
 window.loadAllSubmissions = async function() {
   const filterStatus = document.getElementById("filterStatus")?.value || "All";
   const filterCategory = document.getElementById("filterCategory")?.value || "All";
@@ -133,11 +139,13 @@ window.loadAllSubmissions = async function() {
   }
 }
 
+// ===== UPDATE STATUS (Admin Approve/Reject) =====
 window.updateStatus = async function(id, status) {
   await updateDoc(doc(db, "submissions", id), { status });
   loadAllSubmissions();
 }
 
+// ===== EXPORT PDF =====
 window.exportPDF = function() {
   const { jsPDF } = window.jspdf;
   const docPDF = new jsPDF();
@@ -153,10 +161,77 @@ window.exportPDF = function() {
   docPDF.save("report.pdf");
 }
 
+// ===== EXPORT EXCEL =====
 window.exportExcel = function() {
   const table = document.getElementById("submissionsTable");
   const wb = XLSX.utils.table_to_book(table);
   XLSX.writeFile(wb, "report.xlsx");
 }
 
-if (document.getElementById("mySubmissions
+// ===== ANALYTICS / REPORTS =====
+window.loadReports = async function() {
+  const snapshot = await getDocs(collection(db, "submissions"));
+  const categoryCount = {};
+  const deptCount = {};
+  const statusCount = { Pending: 0, Approved: 0, Rejected: 0 };
+  const roleCount = { student: 0, faculty: 0 };
+
+  snapshot.forEach(docSnap => {
+    const d = docSnap.data();
+    categoryCount[d.category] = (categoryCount[d.category] || 0) + 1;
+    const dept = d.department || "Unspecified";
+    deptCount[dept] = (deptCount[dept] || 0) + 1;
+    if (statusCount[d.status] !== undefined) statusCount[d.status]++;
+    if (roleCount[d.role] !== undefined) roleCount[d.role]++;
+  });
+
+  new Chart(document.getElementById("categoryChart"), {
+    type: 'bar',
+    data: {
+      labels: Object.keys(categoryCount),
+      datasets: [{ label: 'Submissions by Category', data: Object.values(categoryCount), backgroundColor: '#6c63ff' }]
+    },
+    options: { responsive: true, plugins: { legend: { display: false } } }
+  });
+
+  new Chart(document.getElementById("deptChart"), {
+    type: 'pie',
+    data: {
+      labels: Object.keys(deptCount),
+      datasets: [{ data: Object.values(deptCount), backgroundColor: ['#6c63ff', '#f39c12', '#2ecc71', '#e74c3c', '#3498db', '#9b59b6'] }]
+    },
+    options: { responsive: true }
+  });
+
+  new Chart(document.getElementById("statusChart"), {
+    type: 'doughnut',
+    data: {
+      labels: Object.keys(statusCount),
+      datasets: [{ data: Object.values(statusCount), backgroundColor: ['#f39c12', '#2ecc71', '#e74c3c'] }]
+    },
+    options: { responsive: true }
+  });
+
+  new Chart(document.getElementById("roleChart"), {
+    type: 'bar',
+    data: {
+      labels: ['Student', 'Faculty'],
+      datasets: [{ label: 'Submissions by Role', data: [roleCount.student, roleCount.faculty], backgroundColor: ['#3498db', '#e67e22'] }]
+    },
+    options: { responsive: true, indexAxis: 'y', plugins: { legend: { display: false } } }
+  });
+
+  const total = snapshot.size;
+  document.getElementById("reportSummary").innerHTML = `
+    <p><b>Total Submissions:</b> ${total}</p>
+    <p><b>Approved:</b> ${statusCount.Approved} (${total ? Math.round(statusCount.Approved/total*100) : 0}%)</p>
+    <p><b>Pending:</b> ${statusCount.Pending} (${total ? Math.round(statusCount.Pending/total*100) : 0}%)</p>
+    <p><b>Rejected:</b> ${statusCount.Rejected} (${total ? Math.round(statusCount.Rejected/total*100) : 0}%)</p>
+    <p><b>Top Category:</b> ${Object.entries(categoryCount).sort((a,b)=>b[1]-a[1])[0]?.[0] || "N/A"}</p>
+    <p><b>Top Department:</b> ${Object.entries(deptCount).sort((a,b)=>b[1]-a[1])[0]?.[0] || "N/A"}</p>
+  `;
+}
+
+// ===== AUTO-RUN ON PAGE LOAD =====
+if (document.getElementById("mySubmissions")) loadMySubmissions();
+if (document.getElementById("tableBody")) loadAllSubmissions();

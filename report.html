@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Analytics & Reports</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .report-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+      margin-top: 25px;
+    }
+    .chart-card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .chart-card h3 {
+      margin-top: 0;
+      color: #333;
+    }
+    #reportSummary {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      margin-top: 25px;
+    }
+    #reportSummary p {
+      margin: 8px 0;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <span>Contribution Tracker - Reports</span>
+    <button onclick="window.location.href='admin.html'">Back to Dashboard</button>
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <h2>Analytics & Reports</h2>
+
+  <div id="reportSummary"></div>
+
+  <div class="report-grid">
+    <div class="chart-card">
+      <h3>Submissions by Category</h3>
+      <canvas id="categoryChart"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>Submissions by Department</h3>
+      <canvas id="deptChart"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>Status Breakdown</h3>
+      <canvas id="statusChart"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>Student vs Faculty</h3>
+      <canvas id="roleChart"></canvas>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script type="module" src="app.js"></script>
+  <script type="module">
+    window.addEventListener('load', () => {
+      setTimeout(() => { if (window.loadReports) window.loadReports(); }, 500);
+    });
+  </script>
+</body>
+</html>
