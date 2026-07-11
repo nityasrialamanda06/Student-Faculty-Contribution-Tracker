@@ -30,6 +30,10 @@
     #reportSummary p {
       margin: 8px 0;
       font-size: 16px;
+      color: #2d2d2d;
+    }
+    @media (max-width: 700px) {
+      .report-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -41,6 +45,8 @@
   </div>
 
   <h2>Analytics & Reports</h2>
+
+  <button onclick="exportAnalyticsPDF()">Export Full Analytics PDF</button>
 
   <div id="reportSummary"></div>
 
@@ -64,6 +70,7 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script type="module" src="app.js"></script>
   <script type="module">
     window.addEventListener('load', () => {

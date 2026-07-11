@@ -1,78 +1,181 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   font-family: 'Segoe UI', Arial, sans-serif;
-  max-width: 500px;
-  margin: 50px auto;
-  padding: 30px;
-  background: #ffffff;
-  box-shadow: 0 0 20px rgba(0,0,0,0.08);
-  border-radius: 12px;
+  background: linear-gradient(135deg, #6c63ff 0%, #4834d4 100%);
+  min-height: 100vh;
+  padding: 20px;
+  color: #2d2d2d;
 }
-h2 { color: #1a1a2e; }
-h3 { color: #2d6cdf; border-bottom: 2px solid #e0e0e0; padding-bottom: 8px; margin-top: 25px; }
-input, select, textarea, button {
-  display: block;
-  padding: 10px;
-  margin: 8px 0;
-  width: 100%;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 14px;
-}
-input:focus, select:focus, textarea:focus {
-  outline: none;
-  border-color: #2d6cdf;
-}
-button {
-  background: #2d6cdf;
-  color: white;
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
-  padding: 12px;
-  margin-top: 10px;
-}
-button:hover { background: #1e4fb8; }
-#mySubmissions {
-  background: #f9f9fb;
-  padding: 15px;
-  border-radius: 8px;
-  margin-top: 10px;
-}
-#mySubmissions p {
-  border-bottom: 1px solid #eee;
-  padding: 8px 0;
-  margin: 0;
-}
-table {
-  background: white;
-  width: 100%;
-  border-collapse: collapse;
-}
-th, td {
-  padding: 8px;
-  text-align: left;
-  border-bottom: 1px solid #eee;
-}
+
 .navbar {
-  background: #4834d4;
-  padding: 15px 20px;
-  margin: -30px -30px 20px -30px;
-  border-radius: 12px 12px 0 0;
+  background: linear-gradient(90deg, #4834d4, #6c63ff);
+  color: white;
+  padding: 16px 24px;
+  border-radius: 12px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  flex-wrap: wrap;
+  gap: 10px;
 }
+
 .navbar span {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+h2 {
   color: white;
-  font-weight: bold;
-  font-size: 18px;
+  margin-bottom: 20px;
+  font-size: 26px;
 }
-.navbar button {
+
+/* Buttons */
+button {
+  background: #6c63ff;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.2s, transform 0.1s;
   width: auto;
-  margin: 0;
-  padding: 6px 14px;
-  background: white;
-  color: #4834d4;
 }
-.navbar button:hover { background: #f0f0f0; }
+
+button:hover {
+  background: #4834d4;
+  transform: translateY(-1px);
+}
+
+.navbar button {
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(4px);
+}
+
+.navbar button:hover {
+  background: rgba(255,255,255,0.35);
+}
+
+/* Inputs and selects */
+input, select, textarea {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px 14px;
+  margin: 6px 0 16px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  background: white;
+  display: block;
+}
+
+label {
+  color: white;
+  font-weight: 500;
+  display: block;
+  margin-top: 10px;
+}
+
+/* Summary cards */
+.summary-cards, div[style*="display:flex"][style*="gap:15px"] {
+  flex-wrap: wrap;
+}
+
+/* Table container — this fixes the overflow issue */
+.table-wrapper {
+  overflow-x: auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  margin: 20px 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 700px;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+thead {
+  background: #6c63ff;
+  color: white;
+}
+
+th, td {
+  padding: 12px 14px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+  max-width: 220px;
+  overflow-wrap: break-word;
+}
+
+tbody tr:nth-child(even) {
+  background: #f7f7fc;
+}
+
+tbody tr:hover {
+  background: #eeeaff;
+}
+
+td button {
+  font-size: 12px;
+  padding: 6px 10px;
+  margin: 2px;
+}
+
+/* Login/signup form container */
+body:has(#email):not(:has(.navbar)) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-card {
+  background: white;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+  width: 100%;
+  max-width: 380px;
+}
+
+.form-card h2 {
+  color: #2d2d2d;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.form-card button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  font-size: 15px;
+}
+
+/* Submission list cards */
+#mySubmissions p {
+  background: white;
+  padding: 14px 18px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .navbar { flex-direction: column; align-items: flex-start; }
+  input, select { max-width: 100%; }
+}

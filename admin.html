@@ -13,20 +13,20 @@
 
   <h2>Admin Dashboard</h2>
 
-  <div style="display:flex; gap:15px; margin-bottom:20px;">
-    <div style="background:white; padding:15px; border-radius:8px; text-align:center; flex:1;">
+  <div style="display:flex; gap:15px; margin-bottom:20px; flex-wrap:wrap;">
+    <div style="background:white; padding:15px; border-radius:8px; text-align:center; flex:1; min-width:120px;">
       <div id="totalCount" style="font-size:24px; font-weight:bold;">0</div>
       <div>Total</div>
     </div>
-    <div style="background:#fdf3d1; padding:15px; border-radius:8px; text-align:center; flex:1;">
+    <div style="background:#fdf3d1; padding:15px; border-radius:8px; text-align:center; flex:1; min-width:120px;">
       <div id="pendingCount" style="font-size:24px; font-weight:bold;">0</div>
       <div>Pending</div>
     </div>
-    <div style="background:#d4f3e0; padding:15px; border-radius:8px; text-align:center; flex:1;">
+    <div style="background:#d4f3e0; padding:15px; border-radius:8px; text-align:center; flex:1; min-width:120px;">
       <div id="approvedCount" style="font-size:24px; font-weight:bold;">0</div>
       <div>Approved</div>
     </div>
-    <div style="background:#f9d6d6; padding:15px; border-radius:8px; text-align:center; flex:1;">
+    <div style="background:#f9d6d6; padding:15px; border-radius:8px; text-align:center; flex:1; min-width:120px;">
       <div id="rejectedCount" style="font-size:24px; font-weight:bold;">0</div>
       <div>Rejected</div>
     </div>
@@ -71,20 +71,22 @@
   <label>Search by name:</label>
   <input type="text" id="searchName" oninput="loadAllSubmissions()" placeholder="Type a name...">
 
-  <table border="1" id="submissionsTable">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Role</th>
-        <th>Department</th>
-        <th>Category</th>
-        <th>Title</th>
-        <th>Status</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody id="tableBody"></tbody>
-  </table>
+  <div class="table-wrapper">
+    <table border="1" id="submissionsTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Role</th>
+          <th>Department</th>
+          <th>Category</th>
+          <th>Title</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
 
   <button onclick="exportPDF()">Export PDF</button>
   <button onclick="exportExcel()">Export Excel</button>

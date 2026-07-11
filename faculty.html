@@ -6,36 +6,32 @@
 </head>
 <body>
   <div class="navbar">
-    <span>Contribution Tracker</span>
+    <span>Contribution Tracker - Faculty</span>
     <button onclick="logout()">Logout</button>
   </div>
 
-  <h2>Welcome, Faculty</h2>
-  <h3>Submit New Achievement</h3>
+  <h2>Submit New Achievement</h2>
 
-  <input type="text" id="title" placeholder="Title" required><br>
+  <div class="form-card" style="max-width:500px; margin-bottom:24px;">
+    <input type="text" id="title" placeholder="Title">
+    <select id="category">
+      <option>Publication</option>
+      <option>Certification</option>
+      <option>Internship</option>
+      <option>Hackathon</option>
+      <option>Patent</option>
+      <option>Sports</option>
+      <option>Cultural</option>
+      <option>Other</option>
+    </select>
+    <textarea id="description" placeholder="Description" rows="4"></textarea>
+    <input type="date" id="date">
+    <input type="text" id="proof" placeholder="Proof link (Drive/GitHub URL)">
+    <button onclick="submitAchievement()">Submit</button>
+  </div>
 
-  <select id="category">
-    <option>Publication</option>
-    <option>Certification</option>
-    <option>Internship</option>
-    <option>Hackathon</option>
-    <option>Patent</option>
-    <option>Sports</option>
-    <option>Cultural</option>
-    <option>Other</option>
-  </select><br>
-
-  <textarea id="description" placeholder="Description" required></textarea><br>
-
-  <input type="date" id="date" required><br>
-
-  <input type="text" id="proof" placeholder="Proof link (Drive/Github URL)" required><br>
-
-  <button onclick="submitAchievement()">Submit</button>
-
-  <h3>My Submissions</h3>
-  <div id="mySubmissions">Loading...</div>
+  <h2>My Submissions</h2>
+  <div id="mySubmissions"></div>
 
   <script type="module" src="app.js"></script>
 </body>

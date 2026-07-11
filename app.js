@@ -124,8 +124,8 @@ window.loadAllSubmissions = async function() {
     rows += `<tr>
       <td>${d.name || "-"}</td><td>${d.role || "-"}</td><td>${d.department || "-"}</td><td>${d.category}</td><td>${d.title}</td><td>${d.status}</td>
       <td>
-        <button onclick="updateStatus('${docSnap.id}','Approved')" style="width:auto; display:inline-block; padding:4px 8px; margin:2px;">Approve</button>
-        <button onclick="updateStatus('${docSnap.id}','Rejected')" style="width:auto; display:inline-block; padding:4px 8px; margin:2px; background:#e74c3c;">Reject</button>
+        <button onclick="updateStatus('${docSnap.id}','Approved')">Approve</button>
+        <button onclick="updateStatus('${docSnap.id}','Rejected')">Reject</button>
       </td>
     </tr>`;
   });
@@ -145,7 +145,7 @@ window.updateStatus = async function(id, status) {
   loadAllSubmissions();
 }
 
-// ===== EXPORT PDF (Formatted Table) =====
+// ===== EXPORT PDF (Formatted Data Table) =====
 window.exportPDF = function() {
   const { jsPDF } = window.jspdf;
   const docPDF = new jsPDF();
@@ -213,7 +213,7 @@ window.exportExcel = function() {
   XLSX.writeFile(wb, `Contribution_Report_${new Date().toISOString().split('T')[0]}.xlsx`);
 }
 
-// ===== ANALYTICS / REPORTS =====
+// ===== ANALYTICS / REPORTS (Charts) =====
 window.loadReports = async function() {
   const snapshot = await getDocs(collection(db, "submissions"));
   const categoryCount = {};
@@ -275,6 +275,37 @@ window.loadReports = async function() {
     <p><b>Top Category:</b> ${Object.entries(categoryCount).sort((a,b)=>b[1]-a[1])[0]?.[0] || "N/A"}</p>
     <p><b>Top Department:</b> ${Object.entries(deptCount).sort((a,b)=>b[1]-a[1])[0]?.[0] || "N/A"}</p>
   `;
+}
+
+// ===== EXPORT FULL ANALYTICS PDF (With Charts) =====
+window.exportAnalyticsPDF = function() {
+  const { jsPDF } = window.jspdf;
+  const docPDF = new jsPDF();
+
+  docPDF.setFontSize(18);
+  docPDF.setTextColor(40, 40, 90);
+  docPDF.text("Institutional Analytics Report", 14, 18);
+  docPDF.setFontSize(10);
+  docPDF.setTextColor(100);
+  const now = new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
+  docPDF.text(`Generated on: ${now}`, 14, 25);
+
+  const summaryText = document.getElementById("reportSummary").innerText;
+  docPDF.setFontSize(11);
+  docPDF.setTextColor(30);
+  docPDF.text(summaryText.split('\n'), 14, 35);
+
+  const charts = ["categoryChart", "deptChart", "statusChart", "roleChart"];
+  let y = 90;
+  charts.forEach((id, i) => {
+    const canvas = document.getElementById(id);
+    const imgData = canvas.toDataURL("image/png");
+    const x = i % 2 === 0 ? 14 : 110;
+    if (i % 2 === 0 && i !== 0) y += 90;
+    docPDF.addImage(imgData, "PNG", x, y, 85, 80);
+  });
+
+  docPDF.save(`Analytics_Report_${new Date().toISOString().split('T')[0]}.pdf`);
 }
 
 // ===== AUTO-RUN ON PAGE LOAD =====
