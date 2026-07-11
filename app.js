@@ -145,27 +145,72 @@ window.updateStatus = async function(id, status) {
   loadAllSubmissions();
 }
 
-// ===== EXPORT PDF =====
+// ===== EXPORT PDF (Formatted Table) =====
 window.exportPDF = function() {
   const { jsPDF } = window.jspdf;
   const docPDF = new jsPDF();
-  docPDF.text("Submission Report", 10, 10);
-  let y = 20;
+
+  docPDF.setFontSize(18);
+  docPDF.setTextColor(40, 40, 90);
+  docPDF.text("Faculty & Student Contribution Report", 14, 18);
+
+  docPDF.setFontSize(10);
+  docPDF.setTextColor(100);
+  const now = new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
+  docPDF.text(`Generated on: ${now}`, 14, 25);
+
+  const tableData = [];
   document.querySelectorAll("#tableBody tr").forEach(row => {
     const cells = row.querySelectorAll("td");
     if (cells.length > 1) {
-      docPDF.text(`${cells[0].innerText} | ${cells[3].innerText} | ${cells[4].innerText} | ${cells[5].innerText}`, 10, y);
-      y += 8;
+      tableData.push([
+        cells[0].innerText, cells[1].innerText, cells[2].innerText,
+        cells[3].innerText, cells[4].innerText, cells[5].innerText
+      ]);
     }
   });
-  docPDF.save("report.pdf");
+
+  docPDF.autoTable({
+    startY: 32,
+    head: [["Name", "Role", "Department", "Category", "Title", "Status"]],
+    body: tableData,
+    theme: 'striped',
+    headStyles: { fillColor: [108, 99, 255], textColor: 255, fontStyle: 'bold' },
+    alternateRowStyles: { fillColor: [245, 245, 250] },
+    styles: { fontSize: 9, cellPadding: 4 },
+    columnStyles: { 4: { cellWidth: 45 } }
+  });
+
+  const pageCount = docPDF.internal.getNumberOfPages();
+  for (let i = 1; i <= pageCount; i++) {
+    docPDF.setPage(i);
+    docPDF.setFontSize(8);
+    docPDF.setTextColor(150);
+    docPDF.text(`Page ${i} of ${pageCount} | Contribution Tracker System`, 14, docPDF.internal.pageSize.height - 10);
+  }
+
+  docPDF.save(`Contribution_Report_${new Date().toISOString().split('T')[0]}.pdf`);
 }
 
-// ===== EXPORT EXCEL =====
+// ===== EXPORT EXCEL (Clean Sheet) =====
 window.exportExcel = function() {
-  const table = document.getElementById("submissionsTable");
-  const wb = XLSX.utils.table_to_book(table);
-  XLSX.writeFile(wb, "report.xlsx");
+  const rows = [["Name", "Role", "Department", "Category", "Title", "Status"]];
+  document.querySelectorAll("#tableBody tr").forEach(row => {
+    const cells = row.querySelectorAll("td");
+    if (cells.length > 1) {
+      rows.push([
+        cells[0].innerText, cells[1].innerText, cells[2].innerText,
+        cells[3].innerText, cells[4].innerText, cells[5].innerText
+      ]);
+    }
+  });
+
+  const ws = XLSX.utils.aoa_to_sheet(rows);
+  ws['!cols'] = [ { wch: 20 }, { wch: 10 }, { wch: 18 }, { wch: 15 }, { wch: 35 }, { wch: 12 } ];
+
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Submissions");
+  XLSX.writeFile(wb, `Contribution_Report_${new Date().toISOString().split('T')[0]}.xlsx`);
 }
 
 // ===== ANALYTICS / REPORTS =====
