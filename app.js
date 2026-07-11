@@ -95,6 +95,7 @@ window.loadAllSubmissions = async function() {
   const filterStatus = document.getElementById("filterStatus")?.value || "All";
   const filterCategory = document.getElementById("filterCategory")?.value || "All";
   const filterRole = document.getElementById("filterRole")?.value || "All";
+  const filterDept = document.getElementById("filterDept")?.value || "All";
   const searchName = document.getElementById("searchName")?.value?.toLowerCase() || "";
 
   const snapshot = await getDocs(collection(db, "submissions"));
@@ -111,6 +112,7 @@ window.loadAllSubmissions = async function() {
     if (filterStatus !== "All" && d.status !== filterStatus) return;
     if (filterCategory !== "All" && d.category !== filterCategory) return;
     if (filterRole !== "All" && d.role !== filterRole) return;
+    if (filterDept !== "All" && d.department !== filterDept) return;
     if (searchName && !(d.name || "").toLowerCase().includes(searchName)) return;
 
     rows += `<tr>
@@ -157,5 +159,4 @@ window.exportExcel = function() {
   XLSX.writeFile(wb, "report.xlsx");
 }
 
-if (document.getElementById("mySubmissions")) loadMySubmissions();
-if (document.getElementById("tableBody")) loadAllSubmissions();
+if (document.getElementById("mySubmissions

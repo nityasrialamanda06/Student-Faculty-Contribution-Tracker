@@ -50,6 +50,20 @@
     <option value="faculty">Faculty Only</option>
   </select>
 
+  <label>Filter by department:</label>
+  <select id="filterDept" onchange="loadAllSubmissions()">
+    <option value="All">All Departments</option>
+    <option value="CSE">CSE</option>
+    <option value="CSE (Data Science)">CSE (Data Science)</option>
+    <option value="CSE (AI & ML)">CSE (AI & ML)</option>
+    <option value="ECE">ECE</option>
+    <option value="EEE">EEE</option>
+    <option value="Mechanical">Mechanical</option>
+    <option value="Civil">Civil</option>
+    <option value="IT">IT</option>
+    <option value="Administration">Administration</option>
+  </select>
+
   <label>Search by name:</label>
   <input type="text" id="searchName" placeholder="Type a name..." onkeyup="loadAllSubmissions()">
 
