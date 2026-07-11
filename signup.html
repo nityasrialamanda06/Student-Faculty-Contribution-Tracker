@@ -5,33 +5,32 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="navbar">
-    <span>Contribution Tracker</span>
+  <div class="form-card">
+    <h2>Create Account</h2>
+    <input type="text" id="name" placeholder="Full Name" required>
+    <input type="email" id="signupEmail" placeholder="Email" required>
+    <input type="password" id="signupPassword" placeholder="Password" required>
+    <select id="signupRole">
+      <option value="student">Student</option>
+      <option value="faculty">Faculty</option>
+    </select>
+    <select id="department" required>
+      <option value="">Select Department</option>
+      <option value="CSE">CSE</option>
+      <option value="CSE (Data Science)">CSE (Data Science)</option>
+      <option value="CSE (AI & ML)">CSE (AI & ML)</option>
+      <option value="ECE">ECE</option>
+      <option value="EEE">EEE</option>
+      <option value="Mechanical">Mechanical</option>
+      <option value="Civil">Civil</option>
+      <option value="IT">IT</option>
+      <option value="Administration">Administration</option>
+    </select>
+    <button onclick="signup()">Sign Up</button>
+    <p style="text-align:center; margin-top:14px;">
+      Already have an account? <a href="index.html">Login</a>
+    </p>
   </div>
-
-  <h2>Sign Up</h2>
-  <input type="text" id="name" placeholder="Full Name" required><br>
-  <input type="email" id="signupEmail" placeholder="Email" required><br>
-  <input type="password" id="signupPassword" placeholder="Password" required><br>
-  <select id="signupRole">
-    <option value="student">Student</option>
-    <option value="faculty">Faculty</option>
-  </select><br>
-  <select id="department" required>
-  <option value="">Select Department</option>
-  <option value="CSE">CSE</option>
-  <option value="CSE (Data Science)">CSE (Data Science)</option>
-  <option value="CSE (AI & ML)">CSE (AI & ML)</option>
-  <option value="ECE">ECE</option>
-  <option value="EEE">EEE</option>
-  <option value="Mechanical">Mechanical</option>
-  <option value="Civil">Civil</option>
-  <option value="IT">IT</option>
-  <option value="Administration">Administration</option>
-</select><br>
-  <button onclick="signup()">Sign Up</button>
-  <p>Already have an account? <a href="index.html">Login</a></p>
-
   <script type="module" src="app.js"></script>
 </body>
 </html>

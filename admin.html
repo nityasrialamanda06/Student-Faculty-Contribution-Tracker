@@ -7,7 +7,7 @@
 <body>
   <div class="navbar">
     <span>Contribution Tracker - Admin</span>
-    <button onclick="window.location.href='reports.html'">View Analytics & Reports</button>
+    <button onclick="window.location.href='report.html'">View Analytics & Reports</button>
     <button onclick="logout()">Logout</button>
   </div>
 
@@ -63,9 +63,15 @@
   <label>Filter by department:</label>
   <select id="filterDept" onchange="loadAllSubmissions()">
     <option value="All">All Departments</option>
-    <option value="Computer Science">Computer Science</option>
-    <option value="Electronics">Electronics</option>
+    <option value="CSE">CSE</option>
+    <option value="CSE (Data Science)">CSE (Data Science)</option>
+    <option value="CSE (AI & ML)">CSE (AI & ML)</option>
+    <option value="ECE">ECE</option>
+    <option value="EEE">EEE</option>
     <option value="Mechanical">Mechanical</option>
+    <option value="Civil">Civil</option>
+    <option value="IT">IT</option>
+    <option value="Administration">Administration</option>
   </select>
 
   <label>Search by name:</label>
