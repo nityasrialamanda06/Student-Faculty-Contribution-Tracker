@@ -5,10 +5,15 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="navbar">
+    <span>Contribution Tracker</span>
+    <button onclick="logout()">Logout</button>
+  </div>
+
   <h2>Welcome, Student</h2>
   <h3>Submit New Achievement</h3>
 
-  <input type="text" id="title" placeholder="Title"><br>
+  <input type="text" id="title" placeholder="Title" required><br>
 
   <select id="category">
     <option>Publication</option>
@@ -21,18 +26,17 @@
     <option>Other</option>
   </select><br>
 
-  <textarea id="description" placeholder="Description"></textarea><br>
+  <textarea id="description" placeholder="Description" required></textarea><br>
 
-  <input type="date" id="date"><br>
+  <input type="date" id="date" required><br>
 
-  <input type="text" id="proof" placeholder="Proof link (Drive/Github URL)"><br>
+  <input type="text" id="proof" placeholder="Proof link (Drive/Github URL)" required><br>
 
   <button onclick="submitAchievement()">Submit</button>
 
   <h3>My Submissions</h3>
-  <div id="mySubmissions"></div>
+  <div id="mySubmissions">Loading...</div>
 
   <script type="module" src="app.js"></script>
-
 </body>
 </html>

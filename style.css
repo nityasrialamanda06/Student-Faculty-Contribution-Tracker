@@ -3,21 +3,12 @@ body {
   max-width: 500px;
   margin: 50px auto;
   padding: 30px;
-  background: #f5f6fa;
+  background: #ffffff;
+  box-shadow: 0 0 20px rgba(0,0,0,0.08);
+  border-radius: 12px;
 }
-
-h2 {
-  color: #1a1a2e;
-  margin-bottom: 5px;
-}
-
-h3 {
-  color: #4834d4;
-  margin-top: 25px;
-  border-bottom: 2px solid #e0e0e0;
-  padding-bottom: 8px;
-}
-
+h2 { color: #1a1a2e; }
+h3 { color: #2d6cdf; border-bottom: 2px solid #e0e0e0; padding-bottom: 8px; margin-top: 25px; }
 input, select, textarea, button {
   display: block;
   padding: 10px;
@@ -28,40 +19,60 @@ input, select, textarea, button {
   border-radius: 6px;
   font-size: 14px;
 }
-
 input:focus, select:focus, textarea:focus {
   outline: none;
-  border-color: #4834d4;
+  border-color: #2d6cdf;
 }
-
 button {
-  background: linear-gradient(135deg, #6c5ce7, #4834d4);
+  background: #2d6cdf;
   color: white;
   border: none;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 600;
   padding: 12px;
   margin-top: 10px;
-  transition: transform 0.15s, box-shadow 0.15s;
-  box-shadow: 0 2px 6px rgba(72,52,212,0.3);
 }
-
-button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 10px rgba(72,52,212,0.4);
-}
-
+button:hover { background: #1e4fb8; }
 #mySubmissions {
-  background: white;
+  background: #f9f9fb;
   padding: 15px;
   border-radius: 8px;
   margin-top: 10px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
-
 #mySubmissions p {
   border-bottom: 1px solid #eee;
   padding: 8px 0;
   margin: 0;
-  color: #333;
 }
+table {
+  background: white;
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+.navbar {
+  background: #4834d4;
+  padding: 15px 20px;
+  margin: -30px -30px 20px -30px;
+  border-radius: 12px 12px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.navbar span {
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+}
+.navbar button {
+  width: auto;
+  margin: 0;
+  padding: 6px 14px;
+  background: white;
+  color: #4834d4;
+}
+.navbar button:hover { background: #f0f0f0; }
