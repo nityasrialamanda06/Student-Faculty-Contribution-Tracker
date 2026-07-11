@@ -45,6 +45,7 @@ window.login = async function() {
       localStorage.setItem("role", userData.role);
       localStorage.setItem("name", userData.name);
       localStorage.setItem("uid", uid);
+      localStorage.setItem("department", userData.department);
       if (userData.role === "admin") window.location.href = "admin.html";
       else if (userData.role === "faculty") window.location.href = "faculty.html";
       else window.location.href = "student.html";
@@ -62,8 +63,13 @@ window.submitAchievement = async function() {
   const proof = document.getElementById("proof").value;
   if (!title || !description || !date || !proof) { alert("Please fill all fields."); return; }
   await addDoc(collection(db, "submissions"), {
-    uid: localStorage.getItem("uid"), name: localStorage.getItem("name"), role: localStorage.getItem("role"),
-    title, category, description, date, proof, status: "Pending", submittedOn: new Date().toISOString()
+    uid: localStorage.getItem("uid"),
+    name: localStorage.getItem("name"),
+    role: localStorage.getItem("role"),
+    department: localStorage.getItem("department") || "N/A",
+    title, category, description, date, proof,
+    status: "Pending",
+    submittedOn: new Date().toISOString()
   });
   alert("Submitted!");
   document.getElementById("title").value = "";
@@ -86,21 +92,43 @@ window.loadMySubmissions = async function() {
 }
 
 window.loadAllSubmissions = async function() {
-  const filter = document.getElementById("filterStatus")?.value || "All";
+  const filterStatus = document.getElementById("filterStatus")?.value || "All";
+  const filterCategory = document.getElementById("filterCategory")?.value || "All";
+  const filterRole = document.getElementById("filterRole")?.value || "All";
+  const searchName = document.getElementById("searchName")?.value?.toLowerCase() || "";
+
   const snapshot = await getDocs(collection(db, "submissions"));
   let rows = "";
+  let total = 0, pending = 0, approved = 0, rejected = 0;
+
   snapshot.forEach(docSnap => {
     const d = docSnap.data();
-    if (filter !== "All" && d.status !== filter) return;
+    total++;
+    if (d.status === "Pending") pending++;
+    if (d.status === "Approved") approved++;
+    if (d.status === "Rejected") rejected++;
+
+    if (filterStatus !== "All" && d.status !== filterStatus) return;
+    if (filterCategory !== "All" && d.category !== filterCategory) return;
+    if (filterRole !== "All" && d.role !== filterRole) return;
+    if (searchName && !(d.name || "").toLowerCase().includes(searchName)) return;
+
     rows += `<tr>
-      <td>${d.name || "-"}</td><td>${d.role || "-"}</td><td>${d.category}</td><td>${d.title}</td><td>${d.status}</td>
+      <td>${d.name || "-"}</td><td>${d.role || "-"}</td><td>${d.department || "-"}</td><td>${d.category}</td><td>${d.title}</td><td>${d.status}</td>
       <td>
         <button onclick="updateStatus('${docSnap.id}','Approved')" style="width:auto; display:inline-block; padding:4px 8px; margin:2px;">Approve</button>
         <button onclick="updateStatus('${docSnap.id}','Rejected')" style="width:auto; display:inline-block; padding:4px 8px; margin:2px; background:#e74c3c;">Reject</button>
       </td>
     </tr>`;
   });
-  document.getElementById("tableBody").innerHTML = rows || `<tr><td colspan="6">No submissions found.</td></tr>`;
+
+  document.getElementById("tableBody").innerHTML = rows || `<tr><td colspan="7">No submissions found.</td></tr>`;
+  if (document.getElementById("totalCount")) {
+    document.getElementById("totalCount").innerText = total;
+    document.getElementById("pendingCount").innerText = pending;
+    document.getElementById("approvedCount").innerText = approved;
+    document.getElementById("rejectedCount").innerText = rejected;
+  }
 }
 
 window.updateStatus = async function(id, status) {
@@ -115,8 +143,8 @@ window.exportPDF = function() {
   let y = 20;
   document.querySelectorAll("#tableBody tr").forEach(row => {
     const cells = row.querySelectorAll("td");
-    if (cells.length > 0) {
-      docPDF.text(`${cells[0].innerText} | ${cells[2].innerText} | ${cells[3].innerText} | ${cells[4].innerText}`, 10, y);
+    if (cells.length > 1) {
+      docPDF.text(`${cells[0].innerText} | ${cells[3].innerText} | ${cells[4].innerText} | ${cells[5].innerText}`, 10, y);
       y += 8;
     }
   });

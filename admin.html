@@ -3,6 +3,9 @@
 <head>
   <title>Admin Dashboard</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    body { max-width: 900px; }
+  </style>
 </head>
 <body>
   <div class="navbar">
@@ -11,6 +14,14 @@
   </div>
 
   <h2>Admin Dashboard</h2>
+
+  <div id="statsBar" style="display:flex; gap:15px; margin:15px 0;">
+    <div style="background:white; padding:10px 15px; border-radius:6px; flex:1; text-align:center; box-shadow:0 1px 3px rgba(0,0,0,0.08);"><b id="totalCount">0</b><br>Total</div>
+    <div style="background:#fff3cd; padding:10px 15px; border-radius:6px; flex:1; text-align:center;"><b id="pendingCount">0</b><br>Pending</div>
+    <div style="background:#d4edda; padding:10px 15px; border-radius:6px; flex:1; text-align:center;"><b id="approvedCount">0</b><br>Approved</div>
+    <div style="background:#f8d7da; padding:10px 15px; border-radius:6px; flex:1; text-align:center;"><b id="rejectedCount">0</b><br>Rejected</div>
+  </div>
+
   <label>Filter by status:</label>
   <select id="filterStatus" onchange="loadAllSubmissions()">
     <option value="All">All</option>
@@ -19,9 +30,32 @@
     <option value="Rejected">Rejected</option>
   </select>
 
+  <label>Filter by category:</label>
+  <select id="filterCategory" onchange="loadAllSubmissions()">
+    <option value="All">All Categories</option>
+    <option value="Publication">Publication</option>
+    <option value="Certification">Certification</option>
+    <option value="Internship">Internship</option>
+    <option value="Hackathon">Hackathon</option>
+    <option value="Patent">Patent</option>
+    <option value="Sports">Sports</option>
+    <option value="Cultural">Cultural</option>
+    <option value="Other">Other</option>
+  </select>
+
+  <label>Filter by role:</label>
+  <select id="filterRole" onchange="loadAllSubmissions()">
+    <option value="All">All Roles</option>
+    <option value="student">Students Only</option>
+    <option value="faculty">Faculty Only</option>
+  </select>
+
+  <label>Search by name:</label>
+  <input type="text" id="searchName" placeholder="Type a name..." onkeyup="loadAllSubmissions()">
+
   <table border="1" id="submissionsTable">
     <thead>
-      <tr><th>Name</th><th>Role</th><th>Category</th><th>Title</th><th>Status</th><th>Action</th></tr>
+      <tr><th>Name</th><th>Role</th><th>Department</th><th>Category</th><th>Title</th><th>Status</th><th>Action</th></tr>
     </thead>
     <tbody id="tableBody"></tbody>
   </table>
