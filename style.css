@@ -1,0 +1,65 @@
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 30px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  min-height: 100vh;
+}
+
+h2 {
+  color: white;
+  margin-bottom: 5px;
+}
+
+h3 {
+  color: white;
+  margin-top: 25px;
+  border-bottom: 2px solid rgba(255,255,255,0.3);
+  padding-bottom: 8px;
+}
+
+input, select, textarea, button {
+  display: block;
+  padding: 10px;
+  margin: 8px 0;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: #764ba2;
+}
+
+button {
+  background: #ffffff;
+  color: #764ba2;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 12px;
+  margin-top: 10px;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background: #f0f0f0;
+}
+
+#mySubmissions {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+#mySubmissions p {
+  border-bottom: 1px solid #eee;
+  padding: 8px 0;
+  margin: 0;
+  color: #333;
+}

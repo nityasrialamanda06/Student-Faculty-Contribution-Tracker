@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Faculty Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>Welcome, Faculty</h2>
+  <h3>Submit New Achievement</h3>
+
+  <input type="text" id="title" placeholder="Title"><br>
+
+  <select id="category">
+    <option>Publication</option>
+    <option>Certification</option>
+    <option>Internship</option>
+    <option>Hackathon</option>
+    <option>Patent</option>
+    <option>Sports</option>
+    <option>Cultural</option>
+    <option>Other</option>
+  </select><br>
+
+  <textarea id="description" placeholder="Description"></textarea><br>
+
+  <input type="date" id="date"><br>
+
+  <input type="text" id="proof" placeholder="Proof link (Drive/Github URL)"><br>
+
+  <button onclick="submitAchievement()">Submit</button>
+
+  <h3>My Submissions</h3>
+  <div id="mySubmissions"></div>
+
+  <script type="module" src="app.js"></script>
+
+</body>
+</html>
